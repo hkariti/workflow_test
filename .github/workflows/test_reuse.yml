@@ -1,0 +1,24 @@
+name: test reuse
+on:
+  workflow_call
+
+env:
+  AWS_REGION: eu-west-1
+  node_version: "12.x"
+
+jobs:
+  test1:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Setup git
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+      - name: echo something
+        run: echo hello
